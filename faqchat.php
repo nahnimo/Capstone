@@ -24,7 +24,7 @@
                         <div class="msg-header">
                            <?php
                             $hour = date('H');
-                            $greet = ($hour > 18) ? "Good Evening" : (($hour >= 12) ? "Good Afternoon" : "Good Morning");   
+                            $greet = ($hour >= 18) ? "Good Evening" : (($hour >= 12) ? "Good Afternoon" : "Good Morning");   
                             ?>
                             <p><?php echo $greet ?>, how can I help you?</p>
                             

@@ -1,11 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 5.1.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Jan 03, 2022 at 07:19 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,8 +28,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `username`, `password`) VALUES
 (1, 'admin', '21232f297a57a5a743894a0e4a801fc3'),
 (2, 'user', 'ee11cbb19052e40b07aac0ca060c23ee')
-(3, 'nahnimo' , 'joffdoza30')
-(4, 'admin' , 'admin');
+(3, 'admin' , 'admin');
 
 --
 -- Indexes for dumped tables

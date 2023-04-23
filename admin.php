@@ -29,6 +29,9 @@
         <li class="nav-item">
           <a class="nav-link" href="admin.php?p=3">Add Queries</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="admin.php?p=7">Search Queries </a> 
+        </li> 
         
       </ul>
       <form class="d-flex" action="admin.php?p=6" method="POST">
@@ -192,7 +195,33 @@ if (!empty($updated_question)||!empty($updated_answer)){
         die();
       }
 }
-
+if (@$_GET['p'] == 7) {
+    echo "<form action='' method='POST'>
+              <input type='text' name='searchkey' placeholder='Search'>
+              <input type='submit' name='submit'>
+          </form>";
+    echo '<table class="table table-striped">
+              <tr>
+                  <th>Question</th>
+                  <th>Answer</th>
+              </tr>'; 
+    if (isset($_POST['submit'])) {
+        $searchkey = mysqli_real_escape_string($connect, $_POST['searchkey']);
+        $sql = "SELECT * FROM information WHERE id LIKE '%$searchkey%' OR questions LIKE '%$searchkey%' OR answers LIKE '%$searchkey%'";
+        $result = mysqli_query($connect, $sql);
+        if (mysqli_num_rows($result) > 0) {
+            while ($num_rows = mysqli_fetch_array($result)) {
+                echo "<tr>";
+                echo "<td>" . $num_rows['questions'] . "</td>";
+                echo "<td>" . $num_rows['answers'] . "</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='2'>No results found.</td></tr>";
+        }
+    }
+    echo "</table>";
+}
 if(@$_GET['p']==6){
 
   session_start(); 
