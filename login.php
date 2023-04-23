@@ -5,6 +5,16 @@ if(isset($_SESSION["username"])){
 session_destroy();
 }
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Formatter\JsonFormatter;
+require 'vendor/autoload.php';
+$logger = new Logger('logger');
+$logHandler = new StreamHandler('act.log', Logger::DEBUG);
+$jsonFormatter = new JsonFormatter();
+$logHandler->setFormatter($jsonFormatter);
+$logger->pushHandler($logHandler);
+
 $pointer=@$_GET['p'];// We use the superglobal variable $_GET['p'] to create several different menus within a PHP file.
 
 // We initialize the user data through the $_POST array.
@@ -21,7 +31,7 @@ $username = addslashes($username);
 
 $password = stripslashes($password); 
 $password = addslashes($password);
-
+$logger->critical("Trying to login for admin using " .  $username . " and password " . $password	);
 $password=md5($password);// Decrypts the password.
 
 //Query that compares whether the student's credentials are correct.
@@ -41,6 +51,7 @@ header("location:admin.php?p=1");
 }
 else{
 echo'<script type="text/javascript">alert("Incorrect Username or Password");location.href="index.php";</script>';
+
 }
 
 ?>
