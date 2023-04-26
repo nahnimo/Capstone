@@ -1,5 +1,0 @@
-[2023-04-23T15:32:27.095618+02:00] logger.CRITICAL: Trying to login for authorizer [] []
-{"message":"Trying to login for admin using wksdhaKJDGQWKJ and password27e0737d8d01a8992883492b28f2ab09","context":{},"level":500,"level_name":"CRITICAL","channel":"logger","datetime":"2023-04-23T15:36:19.294767+02:00","extra":{}}
-{"message":"Trying to login for admin using  and password ","context":{},"level":500,"level_name":"CRITICAL","channel":"logger","datetime":"2023-04-23T15:37:37.625125+02:00","extra":{}}
-{"message":"Trying to login for admin using JSHADKJWHLKDJH and password Oepoiwasdhf.k1eweqdszdwfcehnjh nghjklhgftszDCQWW54S6RVSDCFVDG3243345636656","context":{},"level":500,"level_name":"CRITICAL","channel":"logger","datetime":"2023-04-23T15:37:48.726356+02:00","extra":{}}
-{"message":"Trying to login for admin using admin and password admin","context":{},"level":500,"level_name":"CRITICAL","channel":"logger","datetime":"2023-04-23T15:39:52.966584+02:00","extra":{}}

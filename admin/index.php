@@ -24,7 +24,7 @@
             <h3 class="mb-5">Sign in</h3>
 
             <div class="form-outline mb-4">
-              <input type="email" name="email" id="typeEmailX-2" class="form-control form-control-lg" />
+              <input type="text" name="username" id="typeEmailX-2" class="form-control form-control-lg" />
               <label class="form-label" for="typeEmailX-2">Username</label>
             </div>
 
@@ -42,42 +42,31 @@
             <input type="submit" name="submit" class="btn btn-primary btn-lg btn-block"></input>
 
             <hr class="my-4">
-            <button type="button" onclick="location.href='register.php';">Dont have an Account?</button>
-                       <?php
+            <?php
 session_start();
 include('connection.php');
 
 if (isset($_POST['submit'])) {
-    $email = $_POST['email'];
+    $email = $_POST['username'];
     $password = $_POST['password'];
 
-    // Query the database for the user with the entered email
-    $query = "SELECT * FROM end_users WHERE email='$email'";
+    // Query the database for the user with the entered email and password
+    $query = "SELECT * FROM users WHERE email='$email' AND password='$password'";
     $result = mysqli_query($connect, $query);
 
     if ($result && mysqli_num_rows($result) > 0) {
-        // Valid email, check password
+        // Valid credentials, set session variables and redirect to index.php
         $user = mysqli_fetch_assoc($result);
-        $hashed_password = $user['password'];
-
-        if (password_verify($password, $hashed_password)) {
-            // Valid password, set session variables and redirect to faqchat.php
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['email'] = $user['email'];
-            header('Location: faqchat.php');
-            exit;
-        } else {
-            // Invalid password, show an error message
-            $error_msg = "Invalid email or password.";
-        }
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['username'] = $user['username'];
+        header('Location: index.php');
+        exit;
     } else {
-        // Invalid email, show an error message
+        // Invalid credentials, show an error message
         $error_msg = "Invalid email or password.";
     }
 }
 ?>
-
 
 
           </div>

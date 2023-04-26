@@ -3,9 +3,6 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-
-
 CREATE TABLE `information` (
   `id` int(11) NOT NULL,
   `questions` varchar(300) NOT NULL,
@@ -13,8 +10,8 @@ CREATE TABLE `information` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-INSERT INTO 'information' ('id', 'questions', 'answers') VALUES
-(1, 'What is NEUST?' , 'NEUST or Nueva Ecija of Science and Technology');
+INSERT INTO information (id, questions, answers) 
+VALUES (1, 'what is NEUST' , 'Nueva Ecija of Science and Technology');
 
 
 CREATE TABLE `user` (
@@ -27,8 +24,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `password`) VALUES
 (1, 'admin', '21232f297a57a5a743894a0e4a801fc3'),
-(2, 'user', 'ee11cbb19052e40b07aac0ca060c23ee')
-(3, 'admin' , 'admin');
+(2, 'user', 'ee11cbb19052e40b07aac0ca060c23ee');
 
 --
 -- Indexes for dumped tables
