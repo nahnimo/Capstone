@@ -16,7 +16,6 @@ if (isset($_POST['submit'])) {
         $hashed_password = $user['password'];
 
         if (password_verify($password, $hashed_password)) {
-        	echo "tite";
             // Valid password, set session variables and redirect to faqchat.php
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['email'] = $user['email'];
