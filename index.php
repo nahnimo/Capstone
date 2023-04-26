@@ -51,9 +51,17 @@ if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Query the database for the user with the entered email
-    $query = "SELECT * FROM end_users WHERE email='$email'";
-    $result = mysqli_query($connect, $query);
+    // Prepare a statement with a placeholder for the email parameter
+    $stmt = mysqli_prepare($connect, "SELECT email, password FROM end_users WHERE email=?");
+    
+    // Bind the email parameter to the statement
+    mysqli_stmt_bind_param($stmt, "s", $email);
+
+    // Execute the statement
+    mysqli_stmt_execute($stmt);
+
+    // Get the result set from the statement
+    $result = mysqli_stmt_get_result($stmt);
 
     if ($result && mysqli_num_rows($result) > 0) {
         // Valid email, check password
@@ -61,11 +69,10 @@ if (isset($_POST['submit'])) {
         $hashed_password = $user['password'];
 
         if (password_verify($password, $hashed_password)) {
-            // Valid password, set session variables and redirect to faqchat.php
+            // Valid password, set session variables and redirect to index.php
             $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email'];
-            header('Location: faqchat.php');
+            header('Location: index.php');
             exit;
         } else {
             // Invalid password, show an error message
@@ -75,7 +82,11 @@ if (isset($_POST['submit'])) {
         // Invalid email, show an error message
         $error_msg = "Invalid email or password.";
     }
+
+    // Close the statement
+    mysqli_stmt_close($stmt);
 }
+
 ?>
 
 
