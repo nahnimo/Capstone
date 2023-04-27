@@ -44,7 +44,13 @@ include('connection.php');
 
 if(isset($_POST['register'])) {
     $username = $_POST['username'];
-    $email = $_POST['email'];
+    if (!preg_match('/^[a-zA-Z0-9@._-\s]+$/', $email)) {
+    // Invalid character in email input
+    $error_msg = "Invalid character in email input. Only letters, digits, @, ., -, and spaces are allowed.";
+} else {
+    // Sanitize the email input
+    $sanitized_email = preg_replace('/[^a-zA-Z0-9@._-\s]/', '', $email);
+}
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 

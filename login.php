@@ -1,6 +1,10 @@
 <?php
 session_start();
-include('connection.php');
+include('connection.php');	
+if(isset($_SESSION['email'])) {
+    header('Location: index.php');
+    exit;
+}
 
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
@@ -24,10 +28,12 @@ if (isset($_POST['submit'])) {
         } else {
             // Invalid password, show an error message
             $error_msg = "Invalid email or password.";
+            
         }
     } else {
         // Invalid email, show an error message
         $error_msg = "Invalid email or password.";
+        
     }
 }
 ?>

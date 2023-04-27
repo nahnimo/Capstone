@@ -1,72 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
+    <?php
+    session_start();
+    include('connection.php');  
+if(!isset($_SESSION['email'])) {
+    header('Location: index.php');
+    exit;
+}
+    
+    if(isset($_GET['logout'])) {
+    session_destroy();
+    header('Location: index.php');
+    exit;
+}
+    ?>
 
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neust Chatbot</title>
-<link rel="stylesheet" href="stylesheet.css">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neust Chatbot</title>
+    <link rel="stylesheet" href="stylesheet.css">
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 
 
-</head>
-<body>
+    </head>
+    <body>
 
-<div class="wrapper">
-    <div class="title">NEUST FAQ Chatbot</div>
-        <div class="form">
-            <div class="bot-inbox inbox">
-                <div class="icon"><i class="fas fa-user"></i>
-                    </div>
-                        <div class="msg-header">
-                           <?php
-                            $hour = date('H');
-                            $greet = ($hour >= 18) ? "Good Evening" : (($hour >= 12) ? "Good Afternoon" : "Good Morning");   
-                            ?>
-                            <p><?php echo $greet ?>, how can I help you?</p>
-                            
+    <div class="wrapper">
+        <div class="title">NEUST FAQ Chatbot</div>
+            <div class="form">
+                <div class="bot-inbox inbox">
+                    <div class="icon"><i class="fas fa-user"></i>
                         </div>
-                    </div>
-                </div>         
+                            <div class="msg-header">
+                               <?php
+                                $hour = date('H');
+                                $greet = ($hour >= 18) ? "Good Evening" : (($hour >= 12) ? "Good Afternoon" : "Good Morning");   
+                                ?>
+                                <p><?php echo $greet ?>, how can I help you?</p>
+                                
+                            </div>
+                        </div>
+                    </div>         
 
- <div class="typing-field">
-      <div class="input-data">
-        <input id="data" type="text" name="text" placeholder="type text here....." required>
-         <button id="send-btn"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-       </div>
+     <div class="typing-field">
+          <div class="input-data">
+            <input id="data" type="text" name="text" placeholder="type text here....." required>
+             <button id="send-btn"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+           </div>
+        </div>
+        <div class="logout">
+            <a href="?logout=1">Logout</a>
+        </div>
     </div>
-</div>
 
-<script>
+    <script>
 
-$(document).ready(function(){
+    $(document).ready(function(){
 
-    $("#send-btn").on("click", function(){
-        $value = $("#data").val();
-        $msg = '<div class="user-inbox inbox"><div class="msg-header"><p>' +$value+'</p></div></div>';
-        $(".form").append($msg);
-        $("#data").val('');
+        $("#send-btn").on("click", function(){
+            $value = $("#data").val();
+            $msg = '<div class="user-inbox inbox"><div class="msg-header"><p>' +$value+'</p></div></div>';
+            $(".form").append($msg);
+            $("#data").val('');
 
-        
-        $.ajax({
+            
+            $.ajax({
 
-            url:'sms.php',
-            type: 'POST',
-            data: 'text='+$value,
-            success: function(result){
+                url:'sms.php',
+                type: 'POST',
+                data: 'text='+$value,
+                success: function(result){
 
-                $reply = '<div class="bot-index inbox"><div class="icon"><i class="fas fa-user"></i></div><div class="msg-header"><p>'+result+'</p></div></div>';
-                $(".form").append($reply);
+                    $reply = '<div class="bot-index inbox"><div class="icon"><i class="fas fa-user"></i></div><div class="msg-header"><p>'+result+'</p></div></div>';
+                    $(".form").append($reply);
 
-                // When the chat reaches the end, the scrollbar goes directly to the bottom of the chat.
-                $(".form").scrollTop($(".form")[0].scrollHeight);
-            }
+                    // When the chat reaches the end, the scrollbar goes directly to the bottom of the chat.
+                    $(".form").scrollTop($(".form")[0].scrollHeight);
+                }
+            });
         });
     });
-});
-  </script>
-</body>
-</html>
+      </script>
+    </body>
+    </html>

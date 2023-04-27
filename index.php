@@ -43,51 +43,60 @@
 
             <hr class="my-4">
             <button type="button" onclick="location.href='register.php';">Dont have an Account?</button>
-                       <?php
-session_start();
-include('connection.php');
+         <?php
+  session_start();
+  include('connection.php');
 
-if (isset($_POST['submit'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    // Prepare a statement with a placeholder for the email parameter
-    $stmt = mysqli_prepare($connect, "SELECT email, password FROM end_users WHERE email=?");
-    
-    // Bind the email parameter to the statement
-    mysqli_stmt_bind_param($stmt, "s", $email);
-
-    // Execute the statement
-    mysqli_stmt_execute($stmt);
-
-    // Get the result set from the statement
-    $result = mysqli_stmt_get_result($stmt);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        // Valid email, check password
-        $user = mysqli_fetch_assoc($result);
-        $hashed_password = $user['password'];
-
-        if (password_verify($password, $hashed_password)) {
-            // Valid password, set session variables and redirect to index.php
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['email'] = $user['email'];
-            header('Location: index.php');
-            exit;
-        } else {
-            // Invalid password, show an error message
-            $error_msg = "Invalid email or password.";
-        }
-    } else {
-        // Invalid email, show an error message
-        $error_msg = "Invalid email or password.";
-    }
-
-    // Close the statement
-    mysqli_stmt_close($stmt);
+  if (isset($_POST['submit'])) {
+      $email = $_POST['email'];
+if (!preg_match('/^[a-zA-Z0-9@._-\s]+$/', $email)) {
+    // Invalid character in email input
+    $error_msg = "Invalid character in email input. Only letters, digits, @, ., -, and spaces are allowed.";
+} else {
+    // Sanitize the email input
+    $sanitized_email = preg_replace('/[^a-zA-Z0-9@._-\s]/', '', $email);
 }
 
-?>
+
+      $password = $_POST['password'];
+
+      // Prepare a statement with a placeholder for the email parameter
+      $stmt = mysqli_prepare($connect, "SELECT email, password FROM end_users WHERE email=?");
+      
+      // Bind the email parameter to the statement
+      mysqli_stmt_bind_param($stmt, "s", $email);
+
+      // Execute the statement
+      mysqli_stmt_execute($stmt);
+
+      // Get the result set from the statement
+      $result = mysqli_stmt_get_result($stmt);
+
+      if ($result && mysqli_num_rows($result) > 0) {
+          // Valid email, check password
+          $user = mysqli_fetch_assoc($result);
+          $hashed_password = $user['password'];
+
+          if (password_verify($password, $hashed_password)) {
+              // Valid password, set session variables and redirect to index.php
+              $_SESSION['user_id'] = $user['id'];
+              $_SESSION['email'] = $user['email'];
+              header('Location: index.php');
+              exit;
+          } else {
+              // Invalid password, show an error message
+              $error_msg = "Invalid email or password.";
+          }
+      } else {
+          // Invalid email, show an error message
+          $error_msg = "Invalid email or password.";
+      }
+
+      // Close the statement
+      mysqli_stmt_close($stmt);
+  }
+
+  ?>
 
 
 
