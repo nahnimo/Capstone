@@ -78,10 +78,10 @@ if (!preg_match('/^[a-zA-Z0-9@._-\s]+$/', $email)) {
           $hashed_password = $user['password'];
 
           if (password_verify($password, $hashed_password)) {
-              // Valid password, set session variables and redirect to index.php
-              $_SESSION['user_id'] = $user['id'];
+              // Valid password, set session variables and redirect to faqchat.php
               $_SESSION['email'] = $user['email'];
-              header('Location: index.php');
+              header('Location: faqchat.php');
+              session_destroy();
               exit;
           } else {
               // Invalid password, show an error message

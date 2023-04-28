@@ -1,6 +1,7 @@
-    <?php
+<?php
     session_start();
-    include('connection.php');  
+    include('connection.php');
+
 if(!isset($_SESSION['email'])) {
     header('Location: index.php');
     exit;
@@ -53,11 +54,12 @@ if(!isset($_SESSION['email'])) {
              <button id="send-btn"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
            </div>
         </div>
-        <div class="logout">
-            <a href="?logout=1">Logout</a>
-        </div>
+        
     </div>
 
+    <div class="logout">
+            <a href="?logout=1">Logout</a>
+        </div>
     <script>
 
     $(document).ready(function(){
