@@ -79,9 +79,9 @@ if (!preg_match('/^[a-zA-Z0-9@._-\s]+$/', $email)) {
 
           if (password_verify($password, $hashed_password)) {
               // Valid password, set session variables and redirect to faqchat.php
+              $_SESSION['user_id'] = $user['id'];
               $_SESSION['email'] = $user['email'];
               header('Location: faqchat.php');
-              session_destroy();
               exit;
           } else {
               // Invalid password, show an error message
