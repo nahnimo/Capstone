@@ -11,7 +11,7 @@ CREATE TABLE `information` (
 
 
 INSERT INTO information (id, questions, answers) 
-VALUES (1, 'what is NEUST' , 'Nueva Ecija of Science and Technology');
+VALUES (1, 'Example Question 1' , 'Example Answer 1');
 
 
 CREATE TABLE `user` (

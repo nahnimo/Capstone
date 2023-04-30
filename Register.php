@@ -4,7 +4,7 @@
     <title>Registration Form</title>
     <style>
         form {
-            max-width: 400px;
+            max-width: 40%;
             margin: 0 auto;
         }
         input[type=text], input[type=email], input[type=password] {
@@ -39,45 +39,63 @@
     </style>
 </head>
 <body>
-    <?php
+   <?php
 include('connection.php');
 
 if(isset($_POST['register'])) {
     $username = $_POST['username'];
     $email = $_POST['email'];
-    if (!preg_match('/^[a-zA-Z0-9@._-\s]+$/', $email)) {
-    // Invalid character in email input
-    $error_msg = "Invalid character in email input. Only letters, digits, @, ., -, and spaces are allowed.";
-} else {
-    // Sanitize the email input
-    $sanitized_email = preg_replace('/[^a-zA-Z0-9@._-\s]/', '', $email);
-}
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+    $error_msg = "";
 
-    // Check if passwords match
-    if($password != $confirm_password) {
-        echo "Passwords do not match!";
-        exit();
+    if (!preg_match('/^[a-zA-Z0-9@.\s-]+$/', $email)) {
+        // Invalid character in email input
+        $error_msg = "Invalid character in email input. Only letters, digits, @, ., -, and spaces are allowed.";
+    } else {
+        // Sanitize the email input
+        $sanitized_email = preg_replace('/^[a-zA-Z0-9@.\s-]+$/', '', $email);
     }
 
-    // Hash the password
-    $password = password_hash($password, PASSWORD_DEFAULT);
+    // Check if the username already exists in the database
+    $query_check = "SELECT * FROM end_users WHERE email = '$email'";
+    $result_check = mysqli_query($connect, $query_check);
 
-    // Insert the user into the database
-    $query = "INSERT INTO end_users (username, email, password) VALUES ('$username', '$email', '$password')";
-    $result = mysqli_query($connect, $query);
+    if(mysqli_num_rows($result_check) > 0) {
+        $error_msg .= "Username already exists!";
+    }
 
-    if($result) {
-        // Display success message and redirect to index.php
-        echo "Account created successfully!";
-        header("Location: index.php");
-        exit();
-    } else {
-        echo "Error: " . mysqli_error($conn);
+    if(empty($error_msg)) {
+        $password = $_POST['password'];
+        $confirm_password = $_POST['confirm_password'];
+
+        // Check if passwords match
+        if($password != $confirm_password) {
+            $error_msg .= "Passwords do not match!";
+        } else {
+            // Hash the password
+            $password = password_hash($password, PASSWORD_DEFAULT);
+
+            // Insert the user into the database
+            $query_insert = "INSERT INTO end_users (username, email, password) VALUES ('$username', '$email', '$password')";
+            $result_insert = mysqli_query($connect, $query_insert);
+
+            if($result_insert) {
+                // Display success message and redirect to index.php
+                echo "Account created successfully!";
+                header("Location: index.php");
+                exit();
+            } else {
+                echo "Error: " . mysqli_error($conn);
+            }
+        }
+    }
+
+    // Display error message as an alert box
+    if(!empty($error_msg)) {
+        echo "<script>alert('$error_msg');</script>";
     }
 }
 ?>
+
 
 
     <form method="post" action="register.php">
