@@ -35,9 +35,10 @@
 
             <!-- Checkbox -->
             <div class="form-check d-flex justify-content-start mb-4">
-              <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
-              <label class="form-check-label" for="form1Example3"> Remember password </label>
-            </div>
+            <input class="form-check-input" type="checkbox" value="on" id="form1Example3" name="remember_me"/>
+            <label class="form-check-label" for="form1Example3"> Remember password </label>
+          </div>
+
 
             <input type="submit" name="submit" class="btn btn-primary btn-lg btn-block"></input>
 
@@ -45,6 +46,21 @@
             <?php
 session_start();
 include('connection.php');
+
+// Check if the "Remember Me" cookie is set and valid
+if (isset($_COOKIE['remember_me'])) {
+    $userId = $_COOKIE['remember_me'];
+    $query = "SELECT * FROM users WHERE id='$userId'";
+    $result = mysqli_query($connect, $query);
+    if ($result && mysqli_num_rows($result) > 0) {
+        // Valid cookie, set session variables and redirect to index.php
+        $user = mysqli_fetch_assoc($result);
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['username'] = $user['username'];
+        header('Location: index.php');
+        exit;
+    }
+}
 
 if (isset($_POST['submit'])) {
     $email = $_POST['username'];
@@ -55,10 +71,14 @@ if (isset($_POST['submit'])) {
     $result = mysqli_query($connect, $query);
 
     if ($result && mysqli_num_rows($result) > 0) {
-        // Valid credentials, set session variables and redirect to index.php
+        // Valid credentials, set session variables and cookie (if "Remember Me" was checked)
         $user = mysqli_fetch_assoc($result);
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
+        if (isset($_POST['remember_me']) && $_POST['remember_me'] == 'on') {
+            $userId = $user['id'];
+            setcookie('remember_me', $userId, time() + 60*60*24*30); // 30 days
+        }
         header('Location: index.php');
         exit;
     } else {
@@ -66,6 +86,7 @@ if (isset($_POST['submit'])) {
         $error_msg = "Invalid email or password.";
     }
 }
+
 ?>
 
 

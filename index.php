@@ -47,6 +47,14 @@
   session_start();
   include('connection.php');
 
+  if(isset($_SESSION['success_msg'])) {
+    // Display the success message
+    echo "<script>alert('".$_SESSION['success_msg']."');</script>";
+
+    // Unset the session variable to prevent it from being displayed again
+    unset($_SESSION['success_msg']);
+}
+
   if (isset($_POST['submit'])) {
       $email = $_POST['email'];
 if (!preg_match('/^[a-zA-Z0-9@._-\s]+$/', $email)) {

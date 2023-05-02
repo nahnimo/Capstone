@@ -46,6 +46,10 @@ if(isset($_POST['register'])) {
     $username = $_POST['username'];
     $email = $_POST['email'];
     $error_msg = "";
+    if (trim($username) === '') {
+        $error_msg = "Username cannot be empty or contain only spaces.";
+    }
+
 
     if (!preg_match('/^[a-zA-Z0-9@.\s-]+$/', $email)) {
         // Invalid character in email input

@@ -40,3 +40,7 @@
 {"message":"Trying to login for admin using admin and password admin","context":{},"level":500,"level_name":"CRITICAL","channel":"logger","datetime":"2023-04-29T16:51:33.230689+02:00","extra":{}}
 {"message":"Trying to login for admin using admin and password admin","context":{},"level":500,"level_name":"CRITICAL","channel":"logger","datetime":"2023-04-29T17:13:55.717735+02:00","extra":{}}
 {"message":"Trying to login for admin using admin and password admin","context":{},"level":500,"level_name":"CRITICAL","channel":"logger","datetime":"2023-04-30T06:03:42.683953+02:00","extra":{}}
+{"message":"Trying to login for admin using admin and password admin","context":{},"level":500,"level_name":"CRITICAL","channel":"logger","datetime":"2023-05-02T10:43:19.768681+02:00","extra":{}}
+{"message":"Trying to login for admin using admin and password admin","context":{},"level":500,"level_name":"CRITICAL","channel":"logger","datetime":"2023-05-02T10:43:38.830765+02:00","extra":{}}
+{"message":"Trying to login for admin using admin and password admin","context":{},"level":500,"level_name":"CRITICAL","channel":"logger","datetime":"2023-05-02T10:46:21.734854+02:00","extra":{}}
+{"message":"Trying to login for admin using admin and password admin","context":{},"level":500,"level_name":"CRITICAL","channel":"logger","datetime":"2023-05-02T11:40:25.138455+02:00","extra":{}}
