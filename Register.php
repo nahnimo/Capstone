@@ -105,16 +105,16 @@ if(isset($_POST['register'])) {
     <form method="post" action="register.php">
     <h2>Registration Form</h2>
     <label for="name">Name</label>
-    <input type="text" id="username" name="username" required>
+    <input type="text" id="username" name="username" placeholder="your_name" required>
 
     <label for="email">Email</label>
-    <input type="email" id="email" name="email" required>
+    <input type="email" id="email" name="email" placeholder ="email@example.com"  required>
 
     <label for="password">Password</label>
-    <input type="password" id="password" name="password" required>
+    <input type="password" id="password" name="password" placeholder="*********" required>
 
     <label for="confirm_password">Confirm Password</label>
-    <input type="password" id="confirm_password" name="confirm_password" required>
+    <input type="password" id="confirm_password" name="confirm_password" placeholder="*********" required>
 
     <button type="submit" name="register">Register</button>
     <br>

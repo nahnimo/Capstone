@@ -25,7 +25,7 @@ while ($row = mysqli_fetch_array($execute_query)) {
     }
     
     // Check for partial match
-    if (strpos(strtolower($question), strtolower($getMessage)) !== false) {
+    if (strlen($getMessage) > 1 && strpos(strtolower($question), strtolower($getMessage)) !== false) {
         $matching_answers[] = $row['answers'];
     }
 }
