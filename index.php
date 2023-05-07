@@ -39,14 +39,16 @@
               <label class="form-check-label" for="form1Example3"> Remember password </label>
             </div>
 
+            <div id="ae_captcha_api"></div>
+
             <input type="submit" name="submit" class="btn btn-primary btn-lg btn-block"></input>
 
             <hr class="my-4">
             <button type="button" onclick="location.href='register.php';">Dont have an Account?</button>
-         <?php
+  <?php
   session_start();
   include('connection.php');
-
+  
   if(isset($_SESSION['success_msg'])) {
     // Display the success message
     echo "<script>alert('".$_SESSION['success_msg']."');</script>";
@@ -67,6 +69,7 @@ if (!preg_match('/^[a-zA-Z0-9@._-\s]+$/', $email)) {
 
 
       $password = $_POST['password'];
+
 
       // Prepare a statement with a placeholder for the email parameter
       $stmt = mysqli_prepare($connect, "SELECT email, password FROM end_users WHERE email=?");
@@ -99,6 +102,12 @@ if (!preg_match('/^[a-zA-Z0-9@._-\s]+$/', $email)) {
           // Invalid email, show an error message
           $error_msg = "Invalid email or password.";
       }
+      if($_SESSION['secure'] == $_POST['user_input']){
+    echo "captcha validated.";
+  } 
+  else{
+    echo "captcha validation failed.";
+  }
 
       // Close the statement
       mysqli_stmt_close($stmt);
@@ -115,5 +124,6 @@ if (!preg_match('/^[a-zA-Z0-9@._-\s]+$/', $email)) {
   </div>
 </section>
 </form>
+<script src="Captcha/captcha-generator/asset/main.js"></script>
 </body>
 </html>
