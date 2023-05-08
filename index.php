@@ -10,6 +10,9 @@
   <!--<link rel="stylesheet" href="stylesheet.css"/>-->
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src=
+        "https://www.google.com/recaptcha/api.js" async defer>
+    </script>
 
 </head>
 
@@ -35,13 +38,11 @@
                   <label class="form-label" for="typePasswordX-2">Password</label>
                 </div>
 
-                
-
-                <div id='ae_captcha_api'></div>
                 <br>
-                <div>
-                  <input type="text" placeholder="Enter Captcha" name="captcha" />
-                </div>
+
+                <div class="g-recaptcha" 
+                data-sitekey="6Lf9f_AlAAAAAPkx1pRrYMooa1om8qJzu6QXTf86">
+            </div>
                 <br>
                 <input type="submit" name="submit" class="btn btn-primary btn-lg btn-block"></input>
 
@@ -54,7 +55,6 @@
       </div>
     </section>
   </form>
-  <script src="./captcha-generator/asset/main.js"></script>
 </body>
 
 </html>
